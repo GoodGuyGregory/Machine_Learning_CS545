@@ -3,22 +3,34 @@ import numpy as np
 
 
 class Neuron_Layer:
-    def __init__(self, n_inputs, n_neurons):
-        self.weights = 0.01 * np.random.randn(n_inputs, n_neurons)
+    def __init__(self, n_inputs, n_neurons, eta):
+        self.weights = np.random.uniform(low=-0.5, high=0.5, size=(n_inputs, n_neurons))
         # 1 x n_neurons matrix
         self.biases = np.ones((1, n_neurons))
 
-    def forward(self, inputs):
-        # inputs [28x28] dot [28 x 10] + [1 x 10]
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
 
-        #inputs [1x784] dot [784 x 10] + [1x10]
-        y = np.dot(inputs, self.weights) + self.biases
-        # emulate reLu Function
-        y = np.maximum(0, y)
+    def forward(self, inputs, targets):
 
-        return y
+            target = targets[i]
+            #inputs [1x784] dot [784 x 10] + [1x10]
+            y = np.dot(inputs, self.weights) + self.biases
+            # activation function is sigmoid
+            y = self.sigmoid(y)
+            #  finds the predicted class index specifically.
+            y = np.argmax(y)
+
+            return y
     # def checkTruth(self, groundTruths, inputs):
-    #     groundTruths[inputs]
+    #     groundTruths[inputs
+
+    def backward(self, targets, yK):
+        for i in range(len(targets)):
+
+#          calculate loss
+
+
 
 
 
@@ -42,8 +54,8 @@ def main():
     # confirms 28 x 28
     # print(normalizedInputs.shape)
     # print(normalizedInputs[0])
-    dense1 = Neuron_Layer(784, 10)
-    print(dense1.forward(normalizedInputs).shape)
+    dense1 = Neuron_Layer(784, 10,0.1)
+    print(dense1.forward(normalizedInputs,groundTruthLables))
 
 
 
